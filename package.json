@@ -1,0 +1,67 @@
+{
+  "name": "claude-external-launcher",
+  "displayName": "Claude External Launcher",
+  "description": "Launch Claude Code in external terminal",
+  "version": "0.0.1",
+  "publisher": "yhonda-mtama",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR-USERNAME/claude-external-launcher"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR-USERNAME/claude-external-launcher/issues"
+  },
+  "homepage": "https://github.com/YOUR-USERNAME/claude-external-launcher#readme",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "claude-external-launcher.launchClaude",
+        "title": "Launch Claude Code in External Terminal"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "claude-external-launcher.launchClaude",
+        "key": "ctrl+alt+c",
+        "when": "!terminalFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Claude External Launcher",
+      "properties": {
+        "claude-external-launcher.preferredTerminal": {
+          "type": "string",
+          "default": "auto",
+          "enum": ["auto", "wt", "cmd", "powershell"],
+          "description": "Preferred terminal for launching Claude Code"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.1",
+    "@types/vscode": "^1.102.0",
+    "@vscode/test-electron": "^2.5.2",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "esbuild": "^0.25.9",
+    "typescript": "^5.9.2"
+  },
+  "license": "ISC"
+}
