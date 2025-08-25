@@ -1,39 +1,29 @@
 # Claude External Launcher
 
-VS Code拡張機能：Claude Codeを外部ターミナルで起動し、ConPTYに関連する日本語入力の問題を解決します。
+VS Code拡張機能：Claude CodeをGit Bash（MinTTY）で起動し、日本語入力を完全にサポートします。
 
 ## 機能
 
-- Claude Codeを外部ターミナル（Windows TerminalまたはCommand Prompt）で起動
+- Claude CodeをGit Bashで起動（MinTTY使用）
+- 日本語入力の完全サポート
+- `.minttyrc`を自動的に設定
 - キーボードショートカット：`Ctrl+Alt+C`
 - ステータスバーにクイックアクセスボタン
-- 優先ターミナルの設定が可能
 
 ## インストール
 
-### VSIXファイルから（推奨）
+### VS Code Marketplaceから（推奨）
+
+1. VS Codeの拡張機能タブを開く
+2. "Claude External Launcher"を検索
+3. インストールボタンをクリック
+
+### VSIXファイルから
 
 1. 最新の`.vsix`ファイルをダウンロード
 2. VS Codeで`Ctrl+Shift+P`を押す
 3. "Extensions: Install from VSIX..."を実行
 4. ダウンロードした`.vsix`ファイルを選択
-
-### ソースコードから
-
-```bash
-# リポジトリをクローン
-git clone https://github.com/yourusername/claude-external-launcher.git
-cd claude-external-launcher
-
-# 依存関係をインストール
-npm install
-
-# 拡張機能をビルド
-npm run compile
-
-# 拡張機能をパッケージ化
-vsce package
-```
 
 ## 使い方
 
@@ -45,25 +35,27 @@ vsce package
 2. **コマンドパレット**：`Ctrl+Shift+P`を押して"Launch Claude Code in External Terminal"を実行
 3. **ステータスバー**：右下の"Claude"ボタンをクリック
 
-### 設定
+### MinTTY設定
 
-VS Codeの設定で優先ターミナルを設定できます：
+拡張機能はGit Bash起動時に自動的に`.minttyrc`を更新します。以下の設定をカスタマイズできます：
 
 ```json
 {
-  "claude-external-launcher.preferredTerminal": "auto"
+  "claude-external-launcher.mintty.locale": "ja_JP",
+  "claude-external-launcher.mintty.charset": "UTF-8",
+  "claude-external-launcher.mintty.font": "MS Gothic",
+  "claude-external-launcher.mintty.fontHeight": 12
 }
 ```
 
-利用可能なオプション：
-- `"auto"` - 自動検出（Windows Terminalが利用可能な場合はそれを、なければCommand Prompt）
-- `"wt"` - Windows Terminal
-- `"cmd"` - コマンドプロンプト
-- `"powershell"` - PowerShell
-
 ## なぜこの拡張機能が必要か？
 
-VS Codeの統合ターミナルでConPTYを無効にして（日本語入力サポートのため）Claude Codeを使用すると、色表示や`/resume`コマンドなどの特定の機能が正しく動作しません。この拡張機能は、これらの機能が正常に動作する外部ターミナルでClaude Codeを起動することで、この問題を解決します。
+Claude Codeで日本語を入力する際、標準のターミナルでは文字化けや入力の問題が発生することがあります。この拡張機能は、MinTTYの設定を最適化したGit BashでClaude Codeを起動することで、日本語入力を含むすべての機能を正常に動作させます。
+
+## 前提条件
+
+- Git for Windows（Git Bashが含まれている必要があります）
+- Claude CLI (`claude`コマンドがインストールされていること)
 
 ## 開発
 
@@ -94,8 +86,8 @@ vsce package
 
 ## ライセンス
 
-MIT
+ISC
 
 ## 貢献
 
-IssueやPull Requestは歓迎します！
+IssueやPull Requestは歓迎します！GitHubリポジトリ：https://github.com/ohishi-yhonda-pub/claude-external-launcher
