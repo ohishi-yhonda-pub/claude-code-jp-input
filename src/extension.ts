@@ -7,29 +7,64 @@ export function activate(context: vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand('claude-external-launcher.launchClaude', () => {
         const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
         const cwd = workspaceFolder ? workspaceFolder.uri.fsPath : process.cwd();
+        
+        // 設定を読み取る
+        const config = vscode.workspace.getConfiguration('claude-external-launcher');
+        const preferredTerminal = config.get<string>('preferredTerminal', 'auto');
 
-        // Windows Terminalがインストールされているか確認
-        cp.exec('where wt', (error) => {
-            if (!error) {
-                // Windows Terminalで起動
-                cp.exec(`wt -d "${cwd}" claude code`, (err) => {
-                    if (err) {
-                        vscode.window.showErrorMessage('Failed to launch Claude Code in Windows Terminal');
+        const launchInWindowsTerminal = () => {
+            cp.exec(`wt -d "${cwd}" claude`, (err) => {
+                if (err) {
+                    vscode.window.showErrorMessage(`Failed to launch Claude in Windows Terminal: ${err.message}`);
+                } else {
+                    vscode.window.showInformationMessage('Claude launched in Windows Terminal');
+                }
+            });
+        };
+
+        const launchInCmd = () => {
+            cp.exec(`start cmd /k "cd /d "${cwd}" && claude"`, (err) => {
+                if (err) {
+                    vscode.window.showErrorMessage(`Failed to launch Claude in Command Prompt: ${err.message}`);
+                } else {
+                    vscode.window.showInformationMessage('Claude launched in Command Prompt');
+                }
+            });
+        };
+
+        const launchInPowerShell = () => {
+            cp.exec(`start powershell -NoExit -Command "cd '${cwd}'; claude"`, (err) => {
+                if (err) {
+                    vscode.window.showErrorMessage(`Failed to launch Claude in PowerShell: ${err.message}`);
+                } else {
+                    vscode.window.showInformationMessage('Claude launched in PowerShell');
+                }
+            });
+        };
+
+        // preferredTerminalの設定に基づいて起動
+        switch (preferredTerminal) {
+            case 'wt':
+                launchInWindowsTerminal();
+                break;
+            case 'cmd':
+                launchInCmd();
+                break;
+            case 'powershell':
+                launchInPowerShell();
+                break;
+            case 'auto':
+            default:
+                // autoの場合、Windows Terminalがあれば使う、なければcmd
+                cp.exec('where wt', (error) => {
+                    if (!error) {
+                        launchInWindowsTerminal();
                     } else {
-                        vscode.window.showInformationMessage('Claude Code launched in Windows Terminal');
+                        launchInCmd();
                     }
                 });
-            } else {
-                // 通常のコマンドプロンプトで起動
-                cp.exec(`start cmd /k "cd /d "${cwd}" && claude code"`, (err) => {
-                    if (err) {
-                        vscode.window.showErrorMessage('Failed to launch Claude Code');
-                    } else {
-                        vscode.window.showInformationMessage('Claude Code launched in Command Prompt');
-                    }
-                });
-            }
-        });
+                break;
+        }
     });
 
     // ステータスバーアイテムの追加

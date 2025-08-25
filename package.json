@@ -2,17 +2,16 @@
   "name": "claude-external-launcher",
   "displayName": "Claude External Launcher",
   "description": "Launch Claude Code in external terminal",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "publisher": "yhonda-mtama",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR-USERNAME/claude-external-launcher"
+    "url": "https://github.com/ohishi-yhonda-pub/claude-external-launcher"
   },
   "bugs": {
-    "url": "https://github.com/YOUR-USERNAME/claude-external-launcher/issues"
+    "url": "https://github.com/ohishi-yhonda-pub/claude-external-launcher/issues"
   },
-  "homepage": "https://github.com/YOUR-USERNAME/claude-external-launcher#readme",
-  "icon": "icon.png",
+  "homepage": "https://github.com/ohishi-yhonda-pub/claude-external-launcher#readme",
   "engines": {
     "vscode": "^1.102.0"
   },
