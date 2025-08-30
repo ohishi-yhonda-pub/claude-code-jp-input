@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx vsce:*)",
+      "Bash(code:*)",
+      "Bash(npm run compile:*)",
+      "Bash(winpty:*)",
+      "Bash(node:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

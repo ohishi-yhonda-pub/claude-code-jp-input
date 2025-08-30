@@ -2,7 +2,7 @@
   "name": "claude-external-launcher",
   "displayName": "Claude External Launcher",
   "description": "Launch Claude in Git Bash with MinTTY Japanese support",
-  "version": "0.0.6",
+  "version": "0.1.8",
   "publisher": "yhonda-mtama",
   "repository": {
     "type": "git",
@@ -35,25 +35,10 @@
     "configuration": {
       "title": "Claude External Launcher",
       "properties": {
-        "claude-external-launcher.mintty.locale": {
-          "type": "string",
-          "default": "ja_JP",
-          "description": "MinTTY locale setting for Git Bash"
-        },
-        "claude-external-launcher.mintty.charset": {
-          "type": "string",
-          "default": "UTF-8",
-          "description": "MinTTY charset setting for Git Bash"
-        },
-        "claude-external-launcher.mintty.font": {
-          "type": "string",
-          "default": "MS Gothic",
-          "description": "MinTTY font setting for Git Bash"
-        },
-        "claude-external-launcher.mintty.fontHeight": {
-          "type": "number",
-          "default": 12,
-          "description": "MinTTY font height setting for Git Bash"
+        "claude-external-launcher.enableJapaneseSupport": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Japanese input support (sets locale and charset only)"
         }
       }
     }

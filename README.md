@@ -18,6 +18,8 @@ VS Code拡張機能：Claude CodeをGit Bash（MinTTY）で起動し、日本語
 2. "Claude External Launcher"を検索
 3. インストールボタンをクリック
 
+**Marketplace URL**: https://marketplace.visualstudio.com/items?itemName=yhonda-mtama.claude-external-launcher
+
 ### VSIXファイルから
 
 1. 最新の`.vsix`ファイルをダウンロード
@@ -81,8 +83,30 @@ npm run compile
 npm run watch
 
 # VSIXパッケージを作成
-vsce package
+npx vsce package
 ```
+
+### 発行手順
+
+```bash
+# 1. バージョンを更新（package.json）
+# 2. ビルドとパッケージング
+npm run compile
+npx vsce package
+
+# 3. Marketplaceに発行（PATが必要）
+npx vsce publish -p <your-personal-access-token>
+
+# または、Marketplace管理ページから直接アップロード
+# https://marketplace.visualstudio.com/manage/publishers/yhonda-mtama
+```
+
+#### Personal Access Token (PAT) の取得
+
+1. [Azure DevOps](https://dev.azure.com/)にアクセス
+2. User Settings → Personal Access Tokens
+3. New Tokenを作成（Marketplace: Manageスコープを選択）
+4. トークンを安全に保存
 
 ## ライセンス
 
